@@ -1,6 +1,6 @@
 const MongoClient = require('mongodb').MongoClient
 const ObjectID = require('mongodb').ObjectID
-const url = 'mongodb://localhost:27017/ltcs'
+const url = require('../config').MONGODB_URI
 
 exports.list = function () {
   return MongoClient.connect(url)
