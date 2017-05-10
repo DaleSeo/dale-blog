@@ -1,5 +1,8 @@
-const router = require('express').Router();
+const router = require('express').Router()
 const userSvc = require('../services/userSvc')
+
+const multer = require('multer')
+const upload = multer()
 
 router.get('/', (req, res) => {
   userSvc.list()
@@ -24,7 +27,15 @@ router.get('/add', (req, res) => {
   res.render('edit', {user: newUser})
 })
 
-router.post('/add', (req, res) => {
+router.post('/add', upload.single('photo'), (req, res) => {
+  console.log('#req.body:', req.body)
+  console.log('#req.file:', req.file)
+  req.body.photo = {
+    type: req.file.mimetype,
+    name: req.file.originalname,
+    size: req.file.size,
+    data: req.file.buffer
+  }
   userSvc.create(req.body)
     .then(id => {
       res.redirect(id)
@@ -34,13 +45,22 @@ router.post('/add', (req, res) => {
 router.get('/:id', (req, res) => {
   userSvc.detail(req.params.id)
     .then(user => {
+      delete user.photo
       res.render('view', {user: user})
+    })
+})
+
+router.get('/:id/photo', (req, res) => {
+  userSvc.detail(req.params.id)
+    .then(user => {
+      res.set('Content-Type', user.photo.type)
+      res.end(user.photo.data.buffer)
     })
 })
 
 router.get('/:id/del', (req, res) => {
   userSvc.remove(req.params.id)
-    then(_ => {
+    .then(_ => {
       res.redirect('/users')
     })
 })
