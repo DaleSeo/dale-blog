@@ -25,7 +25,7 @@
       </div>
       <div class="media">
         <div class="media-left">
-          <img class="media-object" src="/users/<%=user._id%>/photo" width="200"/>
+          <img class="media-object" src="<%=user.photo.location ? user.photo.location : '/images/profile.png'%>" width="200"/>
         </div>
         <div class="media-body">
           <h3 class="media-heading">
@@ -39,7 +39,7 @@
             <dd><%=user.email%></dd>
             <dt>Score</dt>
             <dd><%=user.score%></dd>
-        </dl>
+          </dl>
         </div>
       </div>
     </div>

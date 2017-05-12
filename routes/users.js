@@ -1,10 +1,27 @@
 const router = require('express').Router()
 const fs = require('fs')
 const path = require('path')
+
 const userSvc = require('../services/userSvc')
+const config = require('../config')
+
+const aws = require('aws-sdk')
+const s3 = new aws.S3({region: config.AWS_DEFAULT_REGION})
 
 const multer = require('multer')
-const upload = multer()
+const multerS3 = require('multer-s3')
+
+const upload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: config.S3_BUCKET_NAME,
+    acl: 'public-read',
+    contentType: multerS3.AUTO_CONTENT_TYPE,
+    metadata (req, file, cb) {
+      cb(null, file)
+    }
+  })
+})
 
 router.get('/', (req, res) => {
   userSvc.list()
@@ -37,7 +54,7 @@ router.post('/add', upload.single('photo'), (req, res) => {
       type: req.file.mimetype,
       name: req.file.originalname,
       size: req.file.size,
-      data: req.file.buffer
+      location: req.file.location
     }
   }
   userSvc.create(req.body)
@@ -49,7 +66,7 @@ router.post('/add', upload.single('photo'), (req, res) => {
 router.get('/:id', (req, res) => {
   userSvc.detail(req.params.id)
     .then(user => {
-      delete user.photo
+      // delete user.photo
       res.render('view', {user: user})
     })
 })
@@ -89,7 +106,7 @@ router.post('/:id/edit', upload.single('photo'), (req, res) => {
       type: req.file.mimetype,
       name: req.file.originalname,
       size: req.file.size,
-      data: req.file.buffer
+      location: req.file.location
     }
   }
   userSvc.modify(req.params.id, req.body)
