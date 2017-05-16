@@ -24,10 +24,14 @@ const schema = new mongoose.Schema({
       return value.toLowerCase().replace(' ', '-')
     }
   }
-})
+}, { timestamps: true })
 
-schema.static('list', function (callback) {
-  return this.find({}, null, {sort: {_id: -1}}, callback)
-})
+schema.query.byPublished = function (published) {
+  return this.find({published: published})
+}
+
+schema.statics.list = function (query, callback) {
+  return this.find(query, null, {sort: {_id: -1}}, callback)
+}
 
 module.exports = mongoose.model('Article', schema)

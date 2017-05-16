@@ -2,7 +2,7 @@ const router = require('express').Router()
 const Article = require('../models/article')
 
 router.get('/', (req, res, next) => {
-  Article.find({published: true}, null, {sort: {_id: -1}})
+  Article.list().byPublished(true)
     .then(articles =>
       res.render('index', {articles: articles}))
 })
