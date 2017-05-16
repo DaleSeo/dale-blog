@@ -30,7 +30,7 @@ router.get('/', (req, res) => {
       return users
     })
     .then(users => {
-      res.render('index', {users: users})
+      res.render('user/index.ejs', {users: users})
     })
 })
 
@@ -43,7 +43,7 @@ const newUser = {
 }
 
 router.get('/add', (req, res) => {
-  res.render('edit', {user: newUser})
+  res.render('user/edit', {user: newUser})
 })
 
 router.post('/add', upload.single('photo'), (req, res) => {
@@ -67,7 +67,7 @@ router.get('/:id', (req, res) => {
   userSvc.detail(req.params.id)
     .then(user => {
       // delete user.photo
-      res.render('view', {user: user})
+      res.render('user/view.ejs', {user: user})
     })
 })
 
@@ -94,7 +94,7 @@ router.get('/:id/del', (req, res) => {
 router.get('/:id/edit', (req, res) => {
   userSvc.detail(req.params.id)
     .then(user => {
-      res.render('edit', {user: user})
+      res.render('user/edit.ejs', {user: user})
     })
 })
 
