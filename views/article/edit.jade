@@ -1,0 +1,20 @@
+extends ../layout
+
+block content
+  h3 Post an Article
+  if error
+    div.alert.alert-danger= error
+  div.col-md-8
+    form(method='POST')
+      div.form-group
+        label(for='title') Title
+        input#title.form-control(name='title', type='text', required)
+      div.form-group
+        label(for='slug') Slug
+        input#slug.form-control(name='slug', type='text')
+        span.help-block This string will be used in the URL.
+      div.form-group
+        label(for='text') Text
+        textarea#text.form-control(name='text', rows='5')
+      div.text-right
+        button.btn.btn-primary(type='submit') Save

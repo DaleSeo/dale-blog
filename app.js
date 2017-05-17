@@ -12,8 +12,10 @@ mongoose.connect(config.MONGODB_URI)
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+const articles = require('./routes/articles')
 
 var app = express();
+app.locals.appTitle = 'Dale\'s Blog'
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -30,6 +32,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
+app.use('/articles', articles)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
