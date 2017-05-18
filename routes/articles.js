@@ -21,6 +21,21 @@ router.get('/:slug', (req, res, next) => {
       if (!article.published) return res.sendStatus(401)
       res.render('article/view', article)
     })
+    .catch(err => next(err))
+})
+
+router.delete('/:id', (req, res, next) => {
+  if (!req.params.id) return next(new Error('No article ID.'))
+  Article.findByIdAndRemove(req.params.id)
+    .then(article => res.send(article))
+    .catch(err => next(err))
+})
+
+router.put('/:id', (req, res, next) => {
+  if (!req.params.id) return next(new Error('No article ID.'))
+  Article.findByIdAndUpdate(req.params.id, {$set: req.body.article})
+    .then(count => res.send({affectedCount: count}))
+    .catch(err => next(err))
 })
 
 module.exports = router
