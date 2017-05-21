@@ -32,6 +32,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({secret: 'b1117062-b1ca-43b8-ac25-1095a34cd293'}))
 
+// reject users without their sessions
 app.use((req, res, next) => {
   console.log('req.url:', req.url)
   console.log('req.session:', req.session)
@@ -49,9 +50,9 @@ app.use('/articles', articles)
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
-  err.status = 404;
+  err.status = 404
   next(err);
-});
+})
 
 // error handler
 app.use(function(err, req, res, next) {
