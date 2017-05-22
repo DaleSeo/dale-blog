@@ -1,20 +1,25 @@
 extends ../layout
 
 block content
-  h3 Post an Article
-  if error
-    div.alert.alert-danger= error
-  div.col-md-8
-    form(method='POST')
-      div.form-group
-        label(for='title') Title
-        input#title.form-control(name='title', type='text', required)
-      div.form-group
-        label(for='slug') Slug
-        input#slug.form-control(name='slug', type='text')
-        span.help-block This string will be used in the URL.
-      div.form-group
-        label(for='text') Text
-        textarea#text.form-control(name='text', rows='5')
-      div.text-right
-        button.btn.btn-primary(type='submit') Save
+  section.section
+    .container
+      h1.title Post an Article
+      if error
+        .notification.is-primary= error
+      form(method='POST')
+        .field
+          label.label(for='title') Title
+          p.control
+            input#title.input(name='title', type='text', required)
+        .field
+          label.label(for='slug') Slug
+          p.control
+            input#slug.input(name='slug', type='text')
+            span.help-block This string will be used in the URL.
+        .field
+          label.label(for='text') Text
+          p.control
+            textarea#text.textarea(name='text', rows='5')
+        .field
+          p.control
+            button.button.is-primary(type='submit') Save

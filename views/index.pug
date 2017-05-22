@@ -1,13 +1,15 @@
 extends layout
 
 block content
-  p.lead Welcome to my blog
-  if (articles.length === 0)
-    | There's no published content yet.
-    a(href='/login') Log in
-    | to post and publish
-  else
-    each article, index in articles
-      div
-        h2
-          a(href='/articles/#{article.slug}')= article.title
+  section.section
+    .container
+      if (articles.length === 0)
+        | There's no published content yet.
+        a(href='/login') Log in
+        | to post and publish
+      else
+        each article, index in articles
+          div.content
+            h1.subtitle
+              a(href=`/articles/${article.slug}`)= article.title
+            p= article.text

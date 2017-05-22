@@ -6,12 +6,9 @@ nav.nav(style="background-color:#f5f5f5")
       strong= appTitle
   .nav-center
   .nav-right.nav-menu
-    a.nav-item
-      | Home
-    a.nav-item
-      | Documentation
-    a.nav-item
-      | Blog
+    a.nav-item(href='/') Home
+    a.nav-item Documentation
+    a.nav-item Blog
     .nav-item
       .field.is-grouped
         p.control
@@ -19,11 +16,3 @@ nav.nav(style="background-color:#f5f5f5")
             span.icon
               i.fa.fa-user
             span Profile
-
-section.hero.is-primary
-  .hero-body
-    .container
-      h1.title
-        | Title
-      h2.subtitle
-        | Subtitle
