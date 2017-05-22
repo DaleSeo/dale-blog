@@ -20,7 +20,7 @@ app.locals.appTitle = 'Dale\'s Blog'
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade') // Jade is the default view engine
+app.set('view engine', 'pug') // Jade is the default view engine
 app.engine('ejs', require('ejs').renderFile)
 
 // uncomment after placing your favicon in /public
@@ -30,7 +30,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({secret: 'b1117062-b1ca-43b8-ac25-1095a34cd293'}))
+app.use(session({
+  secret: 'b1117062-b1ca-43b8-ac25-1095a34cd293',
+  resave: true,
+  saveUninitialized: true
+}))
 
 // reject users without their sessions
 app.use((req, res, next) => {
