@@ -1,18 +1,21 @@
-nav.nav(style="background-color:#f5f5f5")
-  .nav-left
-    a.nav-item
-      span.icon
-        i.fa.fa-pencil
-      strong= appTitle
-  .nav-center
-  .nav-right.nav-menu
-    a.nav-item(href='/') Home
-    a.nav-item Documentation
-    a.nav-item Blog
-    .nav-item
-      .field.is-grouped
-        p.control
-          a.button.is-primary
-            span.icon
-              i.fa.fa-user
-            span Profile
+div(style="background-color:#f5f5f5")
+  .container
+    nav.nav(style="background-color:#f5f5f5")
+      .nav-left
+        a.nav-item
+          span.icon
+            i.fa.fa-pencil
+          strong= appTitle
+      .nav-center
+      .nav-right.nav-menu
+        a.nav-item(href='/') Home
+        a.nav-item(href='/articles/new') New Article
+        a.nav-item(href='/pages/new') New Page
+        a.nav-item(href='/admin') Admin
+        .nav-item
+          .field.is-grouped
+            p.control
+              a.button.is-primary
+                span.icon
+                  i.fa.fa-user
+                span Profile

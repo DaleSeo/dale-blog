@@ -17,6 +17,7 @@ const articles = require('./routes/articles')
 
 var app = express();
 app.locals.appTitle = 'Dale\'s Blog'
+app.locals.moment = require('moment')
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -36,10 +37,17 @@ app.use(session({
   saveUninitialized: true
 }))
 
+app.use((req, res, next) => {
+  console.log('#req.url:', req.url)
+  console.log('#req.session:', req.session)
+  console.log('#req.params:', req.params)
+  console.log('#req.body:', req.body)
+  next()
+})
+
 // reject users without their sessions
 app.use((req, res, next) => {
-  console.log('req.url:', req.url)
-  console.log('req.session:', req.session)
+
   if (req.url === '/login' || req.session.user) {
     return next()
   } else {
@@ -50,6 +58,7 @@ app.use((req, res, next) => {
 app.use('/', index);
 app.use('/users', users);
 app.use('/articles', articles)
+app.use('/admin', require('./routes/admin'))
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

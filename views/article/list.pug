@@ -1,0 +1,24 @@
+extends ../layout
+
+block content
+  section.section
+    .container
+      table.table.is-stripped
+        thead
+          tr
+            th Post Title
+            th Created At
+            th Author
+            th Published
+        tbody
+          each article in articles
+            tr(onclick=`location.href = '/articles/${article._id}/edit'`)
+              td= article.title
+              td= moment(article.createdAt).format('YYYY/MM/DD hh:mm:ss')
+              td= article.author || 'Dale Seo'
+              td
+                if article.published
+                  span.tag.is-success Y
+                else
+                  span.tag.is-warning N
+      script(type='text/javascript', src='js/admin.js')

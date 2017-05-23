@@ -7,11 +7,6 @@ router.get('/', (req, res) => {
     .then(articles => res.render('index', {articles: articles}))
 })
 
-router.get('/admin', (req, res) => {
-  Article.list()
-    .then(articles => res.render('admin', {articles}))
-})
-
 router.get('/login', (req, res) => {
   res.render('login')
 })
