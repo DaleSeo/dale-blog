@@ -6,58 +6,52 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 const session = require('express-session')
 const config = require('./config')
-const mongoose = require('mongoose')
+const middleware = require('./utils/middleware')
 
+// database
+const mongoose = require('mongoose')
 mongoose.Promise = global.Promise
 mongoose.connect(config.MONGODB_URI)
 
-var index = require('./routes/index');
-var users = require('./routes/users');
-const articles = require('./routes/articles')
+var app = express()
 
-var app = express();
-app.locals.appTitle = 'Dale\'s Blog'
+app.locals.appTitle = config.appTitle
 app.locals.moment = require('moment')
 
-// view engine setup
+// View Engines
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug') // Jade is the default view engine
 app.engine('ejs', require('ejs').renderFile)
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('common'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({
-  secret: 'b1117062-b1ca-43b8-ac25-1095a34cd293',
-  resave: true,
-  saveUninitialized: true
-}))
+app.use(logger('dev'))
+app.use(express.static(path.join(__dirname, 'public')))
 
-app.use((req, res, next) => {
-  console.log('#req.url:', req.url)
-  console.log('#req.session:', req.session)
-  console.log('#req.params:', req.params)
-  console.log('#req.body:', req.body)
-  next()
-})
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
 
-// reject users without their sessions
-app.use((req, res, next) => {
+// Cookie & Session
+app.use(cookieParser())
+app.use(session(config.sessionOptions))
 
-  if (req.url === '/login' || req.session.user) {
-    return next()
-  } else {
-    return res.redirect('/login')
-  }
-})
+// Flash
+const flash = require('connect-flash')
+app.use(flash())
 
-app.use('/', index);
-app.use('/users', users);
-app.use('/articles', articles)
+// Passport
+const configPassport = require('./config/passport')
+configPassport(app)
+
+// Middlewars
+app.use(middleware.logReq) // logging middlewar
+app.use(middleware.checkAuth) // reject users without their sessions
+
+// Routes
+app.use('/', require('./routes/index'))
+app.use('/', require('./routes/auth'))
+app.use('/users', require('./routes/users'))
+app.use('/articles', require('./routes/articles'))
 app.use('/admin', require('./routes/admin'))
 
 // catch 404 and forward to error handler

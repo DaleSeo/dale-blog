@@ -4,7 +4,7 @@ block content
   section.section
     .container(style="width:350px")
       h1.title Log In
-      if error
+      if error.length > 0
         .notification.is-primary= error
       form(method='POST')
         .field
@@ -17,6 +17,8 @@ block content
             input.input(type='password', name='password', placeholder='Password')
             span.icon.is-small.is-left
               i.fa.fa-lock
-        .field
+        .field.is-grouped
           p.control
-            button.button.is-primary(type='submit') Login
+            button.button.is-primary(type='submit') Log In
+          p.control
+            a.button.is-info(href='/signup') Sign Up
