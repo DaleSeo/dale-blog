@@ -1,6 +1,18 @@
 extends layout
 
 block content
-  h1= message
-  h2= error.status
-  pre #{error.stack}
+  section.section
+    .container
+      h1.title
+        span.icon.is-medium
+          i.fa.fa-exclamation-triangle
+        |  Error
+      hr
+      .card
+        header.card-header
+          p.card-header-title #{error.status} #{error.message}
+        .card-content
+          pre(style="background-color: #fff") #{error.stack}
+        footer.card-footer
+          a.card-footer-item(href="/") Home
+          a.card-footer-item(href="/email") Email

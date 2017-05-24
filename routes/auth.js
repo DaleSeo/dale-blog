@@ -3,7 +3,7 @@ const passport = require('passport')
 const User = require('../models/user')
 
 router.get('/login', (req, res) => {
-  res.render('login', {error: req.flash('error')})
+  res.render('login', { error: req.flash('error') })
 })
 
 router.post('/login',
@@ -16,16 +16,29 @@ router.post('/login',
 )
 
 router.get('/logout', (req, res) => {
-  req.session.destroy()
+  req.logout()
   res.redirect('/')
 })
 
 router.get('/signup', (req, res, next) => {
-  res.send('singup')
+  if (req.isAuthenticated()) {
+    next(new Error('Please log out before singing up.'))
+  }
+  res.render('signup', { error: req.flash('error') })
 })
 
 router.post('/signup', (req, res, next) => {
+  if (req.body.password !== req.body.confirmPassword) {
+    req.flash('error', 'Please confirm the password.')
+    res.redirect('/signup')
+  }
 
+  User.create({
+    email: req.body.email,
+    password: req.body.password
+  })
+  .then(user => res.redirect('/login'))
+  .catch(err => next(err))
 })
 
 module.exports = router
