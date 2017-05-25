@@ -2,6 +2,7 @@ const router = require('express').Router()
 const passport = require('passport')
 const User = require('../models/user')
 
+
 router.get('/login', (req, res) => {
   res.render('login', { error: req.flash('error') })
 })
@@ -38,7 +39,18 @@ router.post('/signup', (req, res, next) => {
     password: req.body.password
   })
   .then(user => res.redirect('/login'))
-  .catch(err => next(err))
+  .catch(err => {
+    if (err.code === 11000) {
+      req.flash('error', 'Duplicated email!')
+      res.redirect('/signup')
+    } else {
+      next(err)
+    }
+  })
+})
+
+router.get('/profile', (req, res, next) => {
+  res.render('profile', {user: req.user})
 })
 
 module.exports = router

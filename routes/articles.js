@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const authUtils = require('../utils/authUtils')
 const Article = require('../models/article')
 
 router.get('/new', (req, res, next) => {
@@ -18,7 +19,7 @@ router.get('/:slug', (req, res, next) => {
   if (!req.params.slug) return next(new Error('No article slug'))
   Article.findOne({slug: req.params.slug})
     .then(article => {
-      if (req.session.user.role != 'Admin' && !article.published) return res.sendStatus(401)
+      // if (req.session.user.role != 'Admin' && !article.published) return res.sendStatus(401)
       res.render('article/view', article)
     })
     .catch(err => next(err))

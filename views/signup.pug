@@ -1,27 +1,25 @@
 extends layout
 
 block content
-  section.section
-    .container(style="width:350px")
-      h1.title Sing Up
-      if error && error.length > 0
-        .notification.is-primary= error
-      form(method='POST')
-        .field
-          p.control.has-icons-left
-            input.input(type='email', name='email', placeholder='Email' required)
-            span.icon.is-small.is-left
-              i.fa.fa-envelope
-        .field
-          p.control.has-icons-left
-            input.input(type='password', name='password', placeholder='Password' required)
-            span.icon.is-small.is-left
-              i.fa.fa-lock
-        .field
-          p.control.has-icons-left
-            input.input(type='password', name='confirmPassword', placeholder='Confirm Password' required)
-            span.icon.is-small.is-left
-              i.fa.fa-key
-        .field
-          p.has-text-right
-            button.button.is-primary(type='submit') Save
+  .ui.container(style="height: 70%")
+    .ui.middle.aligned.center.aligned.grid(style="height: 100%")
+      .six.wide.column
+        h2.ui.teal.header
+          | Sign Up
+        form.ui.large.form(method='POST')
+          .ui.stacked.segment
+            .field
+              div.ui.left.icon.input
+                i.user.icon
+                input(type='email', name='email', placeholder='Email')
+            .field
+              div.ui.left.icon.input
+                i.lock.icon
+                input(type='password', name='password', placeholder='Password')
+            .field
+              div.ui.left.icon.input
+                i.fa-key.icon
+                input(type='confirmPassword', name='confirmPassword', placeholder='confirmPassword')
+            button.ui.fluid.large.teal.button(type='submit') Save
+        if error && error.length > 0
+          .ui.error.message= error

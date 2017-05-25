@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  .ui.container
+    h2.ui.header
+      | Profile
+    hr
+    .ui.items
+      .item
+        .ui.image
+          img(src='/images/profile.png')
+        .content
+          .header= user.email
+          .meta= 'Joined at ' + moment(user.createdAt).format('YY/MM/DD HH:mm:ss')
+          .description= user.description
+            dl
+              dt
+                strong Name
+              dd= user.name || 'Unknown'
+              dt
+                strong Role
+              dd= user.role || 'User'

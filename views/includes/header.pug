@@ -1,21 +1,26 @@
-div(style="background-color:#f5f5f5")
-  .container
-    nav.nav(style="background-color:#f5f5f5")
-      .nav-left
-        a.nav-item
-          span.icon
-            i.fa.fa-pencil
-          strong= appTitle
-      .nav-center
-      .nav-right.nav-menu
-        a.nav-item(href='/') Home
-        a.nav-item(href='/articles/new') New Article
-        a.nav-item(href='/pages/new') New Page
-        a.nav-item(href='/admin') Admin
-        .nav-item
-          .field.is-grouped
-            p.control
-              a.button.is-primary
-                span.icon
-                  i.fa.fa-user
-                span Profile
+.ui.stackable.inverted.menu
+  .ui.container
+    .header.item
+      strong
+       big= appTitle
+    a.item(href='/')
+      i.home.icon
+      | Home
+    a.item(href='/articles/new')
+      i.pencil.icon
+      | New Article
+    a.item(href='/pages/new')
+      i.sticky.note.icon
+      | New Page
+    a.item(href='/admin')
+      i.power.icon
+      | Admin
+    .right.menu
+      .item
+        a.ui.primary.button(href='/profile')
+          i.user.icon
+          | Profile
+      .item
+        .ui.icon.input
+          input(type='search', placeholder='Search...')
+          i.search.icon

@@ -1,10 +1,10 @@
 exports.logReq = function (req, res, next) {
   console.log('#################################')
   console.log('#req.url:', req.url)
-  console.log('#req.session:', req.session)
-  console.log('#req.user:', req.user)
-  console.log('#req.params:', req.params)
-  console.log('#req.body:', req.body)
+  if (req.session) console.log('#req.session:', req.session)
+  if (req.user) console.log('#req.user:', req.user)
+  if (req.params) console.log('#req.params:', req.params)
+  if (req.body) console.log('#req.body:', req.body)
   console.log('#################################')
   next()
 }

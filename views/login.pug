@@ -1,24 +1,25 @@
 extends layout
 
 block content
-  section.section
-    .container(style="width:350px")
-      h1.title Log In
-      if error && error.length > 0
-        .notification.is-primary= error
-      form(method='POST')
-        .field
-          p.control.has-icons-left
-            input.input(type='email', name='email', placeholder='Email')
-            span.icon.is-small.is-left
-              i.fa.fa-envelope
-        .field
-          p.control.has-icons-left
-            input.input(type='password', name='password', placeholder='Password')
-            span.icon.is-small.is-left
-              i.fa.fa-lock
-        .field
-          p.has-text-right
-            button.button.is-primary(type='submit') Log In
-            | &nbsp;
-            a.button.is-info(href='/signup') Sign Up
+  .ui.container(style="height: 70%")
+    .ui.middle.aligned.center.aligned.grid(style="height: 100%")
+      .six.wide.column
+        h2.ui.teal.header
+          | Log-in to your account
+        form.ui.large.form(method='POST')
+          .ui.stacked.segment
+            .field
+              div.ui.left.icon.input
+                i.user.icon
+                input(type='email', name='email', placeholder='Email')
+            .field
+              div.ui.left.icon.input
+                i.lock.icon
+                input(type='password', name='password', placeholder='Password')
+            button.ui.fluid.large.teal.button(type='submit') Login
+        if error && error.length > 0
+          .ui.error.message= error
+        .ui.message
+          | New to us?
+          | &nbsp;
+          a(href='/signup') Sign Up

@@ -1,15 +1,10 @@
 extends layout
 
 block content
-  section.section
-    .container
-      if (articles.length === 0)
-        | There's no published content yet.
-        a(href='/login') Log in
-        | to post and publish
-      else
-        each article, index in articles
-          div.content
-            h1.subtitle
-              a(href=`/articles/${article.slug}`)= article.title
-            p= article.text
+  .ui.container
+    .ui.piled.segments
+      each article, index in articles
+        .ui.segment
+          h4.ui.header
+            a(href=`/articles/${article.slug}`)= article.title
+          p= article.text
