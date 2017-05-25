@@ -1,7 +1,33 @@
 extends ../layout
 
 block content
-  section.section
-    .container
-      h1.title= title
-      pre= text
+  .ui.container
+    h1.ui.header= article.title
+
+    .ui.breadcrumb
+      a.section home
+      i.right.angle.icon.divider
+      a.section= article.title
+
+    .ui.segment
+      p= article.text
+
+    .ui.comments
+      h3.ui.dividing.header Comments
+      .comment
+        a.avatar
+          i.big.user.icon
+        .content
+          a.author Matt
+          .metadata
+            span.date Today at 5:42PM
+          .text
+            | How artistic!
+          .actions
+            a.reply Reply
+      form.ui.reply.form
+        .field
+          textarea
+        .ui.blue.labeled.submit.icon.button
+          i.icon.edit
+          |  Add Reply

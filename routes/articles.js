@@ -20,7 +20,7 @@ router.get('/:slug', (req, res, next) => {
   Article.findOne({slug: req.params.slug})
     .then(article => {
       // if (req.session.user.role != 'Admin' && !article.published) return res.sendStatus(401)
-      res.render('article/view', article)
+      res.render('article/view', {article})
     })
     .catch(err => next(err))
 })
