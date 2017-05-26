@@ -11,6 +11,10 @@ html
     div(style="height: 100%")
       include includes/header
       br
-      block content
+      .ui.grid.container
+        .twelve.wide.column
+          block content
+        .four.wide.column
+          div(style='border: 1px solid red; height: 100%')
       br
       include includes/footer

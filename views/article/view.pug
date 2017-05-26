@@ -9,8 +9,20 @@ block content
       i.right.angle.icon.divider
       a.section= article.title
 
-    .ui.segment
-      p= article.text
+    .ui.right.aligned.grid
+      .column
+        a.ui.labeled.icon.button(href=`/articles`)
+          i.list.icon
+          | List
+        a.ui.labeled.icon.button(href=`/articles/${article._id}/edit`)
+          i.edit.icon
+          | Edit
+        a.ui.labeled.icon.button
+          i.trash.icon
+          | Delete
+
+    .ui.raised.segment
+      pre(style='white-space: pre-wrap')= article.text
 
     .ui.comments
       h3.ui.dividing.header Comments

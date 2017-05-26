@@ -2,6 +2,11 @@ const router = require('express').Router()
 const authUtils = require('../utils/authUtils')
 const Article = require('../models/article')
 
+router.get('/', (req, res) => {
+  Article.list()
+    .then(articles => res.render('article/list', {articles}))
+})
+
 router.get('/new', (req, res, next) => {
   res.render('article/edit', {article: {}})
 })
@@ -12,7 +17,7 @@ router.post('/new', (req, res, next) => {
   }
   Article.create(req.body)
     .then(article => res.redirect('/'))
-    .catch(err => next(err))
+    .catch(next)
 })
 
 router.get('/:slug', (req, res, next) => {
@@ -22,15 +27,15 @@ router.get('/:slug', (req, res, next) => {
       // if (req.session.user.role != 'Admin' && !article.published) return res.sendStatus(401)
       res.render('article/view', {article})
     })
-    .catch(err => next(err))
+    .catch(next)
 })
 
 router.get('/:id/edit', (req, res, next) => {
   Article.findOne({_id: req.params.id})
     .then(article => {
-      res.render('article/edit', {article: article})
+      res.render('article/edit', {article})
     })
-    .catch(err => next(err))
+    .catch(next)
 })
 
 router.post('/:id/edit', (req, res, next) => {
@@ -39,21 +44,21 @@ router.post('/:id/edit', (req, res, next) => {
       console.log('#result:', result)
       res.redirect('/articles/' + req.body.slug)
     })
-    .catch(err => next(err))
+    .catch(next)
 })
 
 router.delete('/:id', (req, res, next) => {
   if (!req.params.id) return next(new Error('No article ID.'))
   Article.findByIdAndRemove(req.params.id)
     .then(article => res.send(article))
-    .catch(err => next(err))
+    .catch(next)
 })
 
 router.put('/:id', (req, res, next) => {
   if (!req.params.id) return next(new Error('No article ID.'))
   Article.findByIdAndUpdate(req.params.id, {$set: req.body.article})
     .then(count => res.send({affectedCount: count}))
-    .catch(err => next(err))
+    .catch(next)
 })
 
 module.exports = router

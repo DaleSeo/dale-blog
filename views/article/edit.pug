@@ -1,29 +1,23 @@
 extends ../layout
 
 block content
-  section.section
-    .container
-      h1.title Article
-      h2.subtitle
+  .ui.container
+    h1.ui.header Article
+      .ui.sub.header
         if article._id
           | Edit
         else
           | New
-      if error
-        .notification.is-primary= error
-      form(method='POST')
-        .field
-          label.label(for='title') Title
-          p.control
-            input#title.input(name='title', type='text', value=article.title, required)
-        .field
-          label.label(for='slug') Slug
-          p.control
-            input#slug.input(name='slug', type='text', value=article.slug, required)
-        .field
-          label.label(for='text') Text
-          p.control
-            textarea#text.textarea(name='text', rows='5')= article.text
-        .field
-          p.control
-            button.button.is-primary(type='submit') Save
+    if error
+      .notification.is-primary= error
+    form.ui.form(method='POST')
+      .field
+        label(for='title') Title
+        input#title.input(name='title', type='text', value=article.title, required)
+      .field
+        label(for='slug') Slug
+        input#slug.input(name='slug', type='text', value=article.slug, required)
+      .field
+        label(for='text') Text
+        textarea#text.textarea(name='text', rows='5')= article.text
+      button.ui.button.is-primary(type='submit') Save
