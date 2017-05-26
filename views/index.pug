@@ -2,9 +2,8 @@ extends layout
 
 block content
   .ui.container
-    .ui.piled.segments
-      each article, index in articles
-        .ui.segment
-          h4.ui.header
-            a(href=`/articles/${article.slug}`)= article.title
-          p= article.text
+    each article, index in articles
+      .ui.piled.segment
+        h4.ui.header
+          a(href=`/articles/${article.slug}`)= article.title
+        p= article.text

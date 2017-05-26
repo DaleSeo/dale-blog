@@ -2,21 +2,44 @@ extends layout
 
 block content
   .ui.container
-    h2.ui.header
+    h1.ui.dividing.header
       | Profile
-    hr
-    .ui.items
-      .item
-        .ui.image
-          img(src='/images/profile.png')
-        .content
-          .header= user.email
-          .meta= 'Joined at ' + moment(user.createdAt).format('YY/MM/DD HH:mm:ss')
-          .description= user.description
-            dl
-              dt
-                strong Name
-              dd= user.name || 'Unknown'
-              dt
-                strong Role
-              dd= user.role || 'User'
+
+    .ui.breadcrumb
+      a.section home
+      i.right.angle.icon.divider
+      a.section profile
+
+    .ui.right.aligned.grid
+      .column
+        a.ui.labeled.icon.positive.button(href='/profile/edit')
+          i.lock.icon
+          | Update Password
+        a.ui.labeled.icon.negative.button(href='/profile/edit')
+          i.remove.user.icon
+          | Remove Account
+
+    .ui.grid
+      .six.wide.column
+        .ui.card
+          .blurring.dimmable.image
+            .ui.dimmer
+              .content
+                .center
+                  .ui.inverted.button Update Photo
+            img(src='/images/profile.png')
+          .ui.bottom.attached.button
+            | Update Photo
+      .ten.wide.column
+        h5.ui.header Email
+        span= user.email
+        h5.ui.header Name
+        span= user.name || 'Unknown'
+        h5.ui.header Role
+        span= user.role || 'User'
+        h5.ui.header Password
+        span ********
+        h5.ui.header Joined at
+        span= moment().format('YY/MM/DD HH:mm:ss')
+        h5.ui.header Description
+        span= user.description

@@ -1,4 +1,4 @@
-.ui.stackable.inverted.menu
+.ui.fixed.stackable.inverted.menu
   .ui.container
     .header.item
       strong
@@ -15,12 +15,21 @@
     a.item(href='/admin')
       i.power.icon
       | Admin
-    .right.menu
-      .item
-        a.ui.primary.button(href='/profile')
-          i.user.icon
+    .ui.right.dropdown.item
+      i.user.icon
+      | Profile
+      i.dropdown.icon
+      .menu
+        a.item(href='/profile')
           | Profile
-      .item
-        .ui.icon.input
-          input(type='search', placeholder='Search...')
-          i.search.icon
+        a.item(href='/logout')
+          | Logout
+    .item
+      .ui.icon.input
+        input(type='search', placeholder='Search...')
+        i.search.icon
+
+script.
+  $(_ => {
+    $('.ui.dropdown').dropdown()
+  })

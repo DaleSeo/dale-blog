@@ -2,7 +2,7 @@ extends ../layout
 
 block content
   .ui.container
-    h1.ui.header= article.title
+    h1.ui.dividing.header= article.title
 
     .ui.breadcrumb
       a.section home
@@ -21,7 +21,7 @@ block content
           i.trash.icon
           | Delete
 
-    .ui.raised.segment
+    .ui.piled.segment
       pre(style='white-space: pre-wrap')= article.text
 
     .ui.comments
