@@ -12,10 +12,10 @@ block content
 
     .ui.right.aligned.grid
       .column
-        a.ui.labeled.icon.positive.button(href='/profile/edit')
+        button.ui.labeled.icon.primary.button.updatePassword(href='/profile/edit')
           i.lock.icon
           | Update Password
-        a.ui.labeled.icon.negative.button(href='/profile/edit')
+        button.ui.labeled.icon.secondary.button.removeAccount(href='/profile/edit')
           i.remove.user.icon
           | Remove Account
 
@@ -43,3 +43,72 @@ block content
         span= moment().format('YY/MM/DD HH:mm:ss')
         h5.ui.header Description
         span= user.description
+
+  .ui.small.basic.modal.updatePassword
+    .ui.icon.header
+      | Update Password
+    .content
+      form.ui.form.updatePassword
+        .field
+          div.ui.left.icon.input
+            i.lock.icon
+            input(type='password', name='oldPassword', placeholder='Old Password')
+        .field
+          div.ui.left.icon.input
+            i.lock.icon
+            input(type='password', name='newPassword', placeholder='New Password')
+        .field
+          div.ui.left.icon.input
+            i.fa-key.icon
+            input(type='password', name='confirmPassword', placeholder='Confirm Password')
+    .actions
+      .ui.red.cancel.basic.inverted.button
+        i.remove.icon
+        | Cancel
+      .ui.green.ok.inverted.button
+        i.checkmark.icon
+        | OK
+
+  .ui.small.basic.modal.removeAccount
+    .ui.icon.header
+      i.help.circle.sign.icon
+      | Are you sure?
+    .actions
+      .ui.red.cancel.basic.inverted.button
+        i.remove.icon
+        | No
+      .ui.green.ok.inverted.button
+        i.checkmark.icon
+        | Yes
+
+  script.
+    $('.ui.button.updatePassword').click(updatePassword)
+    $('.ui.button.removeAccount').click(removeAccount)
+
+    $('.ui.modal.updatePassword').modal({
+      onApprove () {
+        console.log('updatePassword.onApprove')
+        $.post('/profile/updatePassword', $('.ui.form.updatePassword').serialize())
+          .then(_ => toastr.success('Successfully updated your password.'))
+          .catch(err => toastr.error(err.responseText))
+      }
+    })
+
+    $('.ui.modal.removeAccount').modal({
+      onApprove () {
+        console.log('removeAccount.onApprove')
+        $.post('/profile/removeAccount')
+          .then(data => window.location.href = '/')
+          .catch(toastr.error)
+      }
+    })
+
+    function updatePassword (e) {
+      console.log('#updatePassword')
+      $('.ui.modal.updatePassword').modal('show')
+    }
+
+    function removeAccount (e) {
+      console.log('#removeAccount')
+      $('.ui.modal.removeAccount').modal('show')
+    }

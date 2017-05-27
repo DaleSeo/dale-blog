@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  .ui.container(style="height: 70%")
+  .ui.container(style="height: 100%")
     .ui.middle.aligned.center.aligned.grid(style="height: 100%")
       .six.wide.column
         h2.ui.teal.header
@@ -19,7 +19,7 @@ block content
             .field
               div.ui.left.icon.input
                 i.fa-key.icon
-                input(type='confirmPassword', name='confirmPassword', placeholder='confirmPassword')
+                input(type='password', name='confirmPassword', placeholder='confirmPassword')
             button.ui.fluid.large.teal.button(type='submit') Save
         if error && error.length > 0
           .ui.error.message= error

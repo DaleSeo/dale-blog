@@ -13,6 +13,7 @@ const publicUrls = ['/login', '/signup', '/error']
 
 exports.checkAuth = (req, res, next) => {
   if (publicUrls.indexOf(req.url) > -1 || (req.session && req.user)) {
+    res.locals.user = req.user
     return next()
   } else {
     return res.redirect('/login')

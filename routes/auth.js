@@ -53,4 +53,32 @@ router.get('/profile', (req, res, next) => {
   res.render('profile', {user: req.user})
 })
 
+router.post('/profile/updatePassword', (req, res, next) => {
+  if (req.body.newPassword !== req.body.confirmPassword) {
+    res.status(400).send('Passwords don\'t match')
+    return
+  }
+  User.findById(req.user._id)
+    .then(user => {
+      if (user.password !== req.body.oldPassword) {
+        res.status(400).send('Old password doesn\'t match')
+        return
+      }
+      user.password = req.body.newPassword
+      user.save()
+        .then(_ => res.sendStatus(204))
+    })
+    .catch(next)
+})
+
+router.post('/profile/removeAccount', (req, res, next) => {
+  User.findByIdAndRemove(req.user._id).exec()
+    .then(user => {
+      console.log('User removed:', user)
+      req.logout()
+      res.sendStatus(204)
+    })
+    .catch(next)
+})
+
 module.exports = router
