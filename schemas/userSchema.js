@@ -1,4 +1,5 @@
 const Schema = require('mongoose').Schema
+const securityUtils = require('../utils/securityUtils')
 
 const schema = new Schema({
   email: {
@@ -26,5 +27,21 @@ const schema = new Schema({
     default: false
   }
 }, { timestamps: true })
+
+schema.pre('save', function (next) {
+  let user = this
+  if (!user.isModified('password')) return next()
+  securityUtils.encryptPassword(user.password)
+    .then(encryptedPassword => {
+      console.log(`password encrypted: ${user.password} => ${encryptedPassword}`)
+      user.password = encryptedPassword
+      next()
+    })
+    .catch(err => next(err))
+})
+
+schema.methods.verifyPassword = function (candidatePassword) {
+  return securityUtils.comparePasswords(candidatePassword, this.password)
+}
 
 module.exports = schema

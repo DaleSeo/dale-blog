@@ -21,19 +21,20 @@ module.exports = function (app) {
       if (!email || !password) {
         return done(null, false, { message: 'Please enter your email and password.' })
       }
-      User.findOne({
-        email: email,
-        password: password
-      })
+      User.findOne({ email: email })
       .then(user => {
         console.log('user:', user)
         if (!user) {
           return done(null, false, { message: 'incorrect email.' })
         }
-        if (user.password !== password) {
-          return done(null, false, { message: 'incorrect password.' })
-        }
-        return done(null, user)
+        user.verifyPassword(password)
+          .then(isMatch => {
+            if (isMatch) {
+              return done(null, user)
+            } else {
+              return done(null, false, { message: 'incorrect password.' })
+            }
+          })
       })
       .catch(err => done(err))
     }

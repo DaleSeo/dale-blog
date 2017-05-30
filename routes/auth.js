@@ -10,7 +10,7 @@ router.get('/login', (req, res) => {
 router.post('/login',
   passport.authenticate('local', {
     successRedirect: '/',
-    successFlash: 'Successfully loged in.',
+    // successFlash: 'Successfully loged in.',
     failureRedirect: '/login',
     failureFlash: true
   })
@@ -60,13 +60,16 @@ router.post('/profile/updatePassword', (req, res, next) => {
   }
   User.findById(req.user._id)
     .then(user => {
-      if (user.password !== req.body.oldPassword) {
-        res.status(400).send('Old password doesn\'t match')
-        return
-      }
-      user.password = req.body.newPassword
-      user.save()
-        .then(_ => res.sendStatus(204))
+      user.verifyPassword(req.body.oldPassword)
+        .then(isMatch => {
+          if (isMatch) {
+            user.password = req.body.newPassword
+            user.save()
+              .then(_ => res.sendStatus(204))
+          } else {
+            res.status(400).send('Old password doesn\'t match')
+          }
+        })
     })
     .catch(next)
 })

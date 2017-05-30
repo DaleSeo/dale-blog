@@ -1,5 +1,4 @@
 const router = require('express').Router()
-const authUtils = require('../utils/authUtils')
 const Article = require('../models/article')
 
 router.get('/', (req, res) => {
