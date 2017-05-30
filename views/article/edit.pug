@@ -20,4 +20,8 @@ block content
       .field
         label(for='text') Text
         textarea#text.textarea(name='text', rows='5')= article.text
+      .inline.field
+        .ui.checkbox
+          input#published.hidden(name='published', type='checkbox' tabindex='0' vlaue=article.published)
+          label(for='published') Published
       button.ui.button.is-primary(type='submit') Save

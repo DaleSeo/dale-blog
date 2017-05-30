@@ -5,7 +5,7 @@ block content
     h1.ui.header Article
       .ui.sub.header List
 
-    table.ui.table
+    table.ui.sortable.selectable.table
       thead
         tr
           th Post Title
@@ -23,4 +23,7 @@ block content
                 span.tag.is-success Y
               else
                 span.tag.is-warning N
-    script(type='text/javascript', src='js/admin.js')
+  script(src='/js/admin.js')
+  script(src='/js/tablesort.js')
+  script.
+    $('.ui.table').tablesort()
